@@ -1,5 +1,5 @@
-output "app.0.ip" {
-  value = "${module.jenkins.app.0.ip}"
+output "jenkins-master.0.ip" {
+  value = "${module.jenkins.jenkins-master.0.ip}"
 }
 
 output "nat.ip" {

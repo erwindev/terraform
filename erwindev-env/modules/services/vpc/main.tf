@@ -65,7 +65,7 @@ resource "aws_security_group" "default" {
   }
 
   tags {
-    Name = "erwin-example-default-vpc"
+    Name = "erwindev-default-vpc"
   }
 }
 
@@ -172,7 +172,7 @@ resource "aws_instance" "nat" {
   ami = "${lookup(var.amis, var.region)}"
   instance_type = "t2.micro"
   subnet_id = "${aws_subnet.public.id}"
-  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.nat.id}"]
+  vpc_security_group_ids = ["${aws_security_group.default.id}", "${aws_security_group.nat.id}"]
   key_name = "${aws_key_pair.deployer.key_name}"
   source_dest_check = false
   tags = {

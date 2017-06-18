@@ -1,3 +1,3 @@
-output "app.0.ip" {
-  value = "${aws_instance.app.0.private_ip}"
+output "jenkins-master.0.ip" {
+  value = "${aws_instance.jenkins-master.0.private_ip}"
 }

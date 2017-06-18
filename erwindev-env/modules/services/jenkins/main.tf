@@ -14,6 +14,7 @@ resource "aws_instance" "app" {
 }
 
 /* Load balancer */
+/*
 resource "aws_elb" "app" {
   name = "jenkins-elb"
   subnets = ["${var.public_ip}"]
@@ -26,3 +27,4 @@ resource "aws_elb" "app" {
   }
   instances = ["${aws_instance.app.*.id}"]
 }
+*/

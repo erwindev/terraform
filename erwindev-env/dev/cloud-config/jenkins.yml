@@ -1,0 +1,13 @@
+#cloud-config
+# Cloud config for Jenkins servers
+
+runcmd:
+# Install Docker
+- apt install dirmngr
+- curl -sSL https://get.docker.com | sudo sh
+# Create and set permissions for Jenkins mount directory
+- JENKINS_HOME=/opt/jenkins_home
+- sudo mkdir -p $JENKINS_HOME
+- sudo chmod -R 777 $JENKINS_HOME
+# Start Jenkins
+- docker run -id --name jenkins -p 8080:8080 -p 50000:50000 -v $JENKINS_HOME:/var/jenkins_home jenkins:2.3-alpine

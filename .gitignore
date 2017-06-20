@@ -4,3 +4,4 @@
 terraform.tfvars
 **/ssh/*
 *.ovpn
+**/ovpn-init

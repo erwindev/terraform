@@ -28,3 +28,14 @@ module "jenkins" {
   public_ip              = "${module.vpc.public_ip}"
   web_security_group     = "${module.vpc.web_security_group}"
 }
+
+module "appserver" {
+  source = "../../../modules/services/appserver"
+
+  region                 = "${var.region}"
+  private_ip             = "${module.vpc.private_ip}"
+  default_security_group = "${module.vpc.default_security_group}"
+  key_name               = "${module.vpc.key_name}"
+  public_ip              = "${module.vpc.public_ip}"
+  web_security_group     = "${module.vpc.web_security_group}"
+}

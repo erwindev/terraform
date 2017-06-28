@@ -6,8 +6,8 @@ runcmd:
 - apt install dirmngr
 - curl -sSL https://get.docker.com | sudo sh
 # Create and set permissions for Jenkins mount directory
-- JENKINS_HOME=/opt/jenkins_home
-- sudo mkdir -p $JENKINS_HOME
-- sudo chmod -R 777 $JENKINS_HOME
-# Start Jenkins
-- docker run -id --name jenkins -p 8080:8080 -p 50000:50000 -v $JENKINS_HOME:/var/jenkins_home jenkins:2.3-alpine
+- wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
+- echo deb http://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list
+- sudo apt-get update
+- sudo apt-get install jenkins
+- sudo systemctl start jenkins

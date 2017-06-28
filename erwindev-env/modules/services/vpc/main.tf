@@ -168,6 +168,15 @@ resource "aws_key_pair" "deployer" {
 /* Create the NAT Instance     */
 /*******************************/
 /* NAT/VPN server */
+resource "aws_ebs_volume" "ebs-volume-nat" {
+  availability_zone = "us-east-1a"
+  size = 500
+  type = "st1"
+  tags {
+      Name = "NAT EBS volume"
+  }
+}
+
 resource "aws_instance" "nat" {
   ami = "${lookup(var.amis, var.region)}"
   instance_type = "t2.micro"
@@ -193,9 +202,15 @@ resource "aws_instance" "nat" {
       "sudo mkdir -p /etc/openvpn",
       "sudo docker run --name ovpn-data -v /etc/openvpn busybox",
       /* Generate OpenVPN server config */
-      "sudo docker run --volumes-from ovpn-data --rm kylemanna/openvpn ovpn_genconfig -p ${var.vpc_cidr} -u udp://${aws_instance.nat.public_ip}"
+      "sudo docker run --volumes-from ovpn-data --rm gosuri/openvpn ovpn_genconfig -p ${var.vpc_cidr} -u udp://${aws_instance.nat.public_ip}"
     ]
   }
+}
+
+resource "aws_volume_attachment" "ebs-nat-attachment" {
+  device_name = "/dev/sdf"
+  volume_id = "${aws_ebs_volume.ebs-volume-nat.id}"
+  instance_id = "${aws_instance.nat.id}"
 }
 
 /****************************************/
